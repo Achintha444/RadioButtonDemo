@@ -22,6 +22,20 @@ class _MyAppState extends State<MyApp> {
     "Chelsea"
   ];
 
+  List<String> _managers = [
+    "Ole Gunnar Solskjaer",
+    "Ernesto Valvarde",
+    "Zindeine Zindane",
+    "Frank Lampard",
+  ];
+  String _selectedManagers;
+
+  @override
+  void initState() {
+    _selectedManagers = _managers[0];
+    super.initState();
+  }
+
   void _switchOnClick(bool value) {
     setState(() {
       _switchBool = value;
@@ -37,7 +51,26 @@ class _MyAppState extends State<MyApp> {
     setState(() {
       SnackBar snackBar = new SnackBar(
         backgroundColor: Colors.lightBlueAccent,
-        content: new Text("You Selected " + _teams[_selectedTeamIndex]+" awesomenes is "+(_selectedTeamAwesomenes*100).round().toString()),
+        content: new Text("You Selected " +
+            _teams[_selectedTeamIndex] +
+            " awesomenes is " +
+            (_selectedTeamAwesomenes * 100).round().toString()),
+        action: SnackBarAction(
+          label: "OK",
+          onPressed: () {
+            Scaffold.of(tempContext).hideCurrentSnackBar();
+          },
+        ),
+      );
+      Scaffold.of(tempContext).showSnackBar(snackBar);
+    });
+  }
+
+  void _clickOnClickManager(BuildContext tempContext) {
+    setState(() {
+      SnackBar snackBar = new SnackBar(
+        backgroundColor: Colors.lightBlueAccent,
+        content: new Text("You selected "+_selectedManagers),
         action: SnackBarAction(
           label: "OK",
           onPressed: () {
@@ -77,40 +110,82 @@ class _MyAppState extends State<MyApp> {
               padding: EdgeInsets.only(bottom: _size / 60),
               alignment: Alignment.topCenter,
               child: new SizedBox(
-                height: _size / 2.4,
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: _teams.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return new Container(
-                      alignment: Alignment.topCenter,
-                      padding: EdgeInsets.only(bottom: _size / 60),
-                      decoration: new BoxDecoration(
-                        border: new Border(
-                          bottom: new BorderSide(
-                            color: Colors.lightBlueAccent,
-                            width: 2,
+                height: _size / 4,
+                child: new Scrollbar(
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: _teams.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return new Container(
+                        alignment: Alignment.topCenter,
+                        padding: EdgeInsets.only(bottom: _size / 60),
+                        decoration: new BoxDecoration(
+                          border: new Border(
+                            bottom: new BorderSide(
+                              color: Colors.lightBlueAccent,
+                              width: 2,
+                            ),
                           ),
                         ),
-                      ),
-                      child: new RadioListTile(
-                        value: index,
-                        secondary: new Icon(
-                          Icons.group,
-                          color: Colors.lightBlueAccent,
+                        child: new RadioListTile(
+                          value: index,
+                          secondary: new Icon(
+                            Icons.group,
+                            color: Colors.lightBlueAccent,
+                          ),
+                          title: new Text(_teams[index]),
+                          groupValue: _selectedTeamIndex,
+                          onChanged: (int value) {
+                            setState(() {
+                              _selectedTeamIndex = value;
+                            });
+                          },
                         ),
-                        title: new Text(_teams[index]),
-                        groupValue: _selectedTeamIndex,
-                        onChanged: (int value) {
-                          setState(() {
-                            _selectedTeamIndex = value;
-                          });
-                        },
-                      ),
-                    );
-                  },
+                      );
+                    },
+                  ),
                 ),
               ),
+            ),
+            new Container(
+              alignment: Alignment.topCenter,
+              padding: EdgeInsets.only(top: _size / 60, bottom: _size / 60),
+              child: new Text(
+                "Select Your Favourite Manager!",
+                style: new TextStyle(
+                  fontSize: _size / 40,
+                  letterSpacing: 2,
+                  color: Colors.blueAccent,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            new DropdownButton(
+              icon: new Icon(Icons.person_add, color: Colors.blueAccent),
+              value: _selectedManagers,
+              items: _managers.map((String value) {
+                return new DropdownMenuItem(
+                  value: value,
+                  child: new Row(
+                    children: <Widget>[
+                      new Icon(
+                        Icons.person_outline,
+                        color: Colors.lightBlueAccent,
+                      ),
+                      new Container(
+                        padding: EdgeInsets.only(
+                            left: _sizeWidth / 20, right: _sizeWidth / 40),
+                        child: new Text(value),
+                      ),
+                    ],
+                  ),
+                );
+              }).toList(),
+              onChanged: (String value) {
+                setState(() {
+                  _selectedManagers = value;
+                });
+              },
             ),
             new Container(
               alignment: Alignment.topCenter,
@@ -138,7 +213,7 @@ class _MyAppState extends State<MyApp> {
               ),
             ),
             new Container(
-              padding: EdgeInsets.only(bottom: _size/60),
+              padding: EdgeInsets.only(bottom: _size / 60),
               child: new LinearProgressIndicator(
                 value: _selectedTeamAwesomenes,
               ),
@@ -162,7 +237,13 @@ class _MyAppState extends State<MyApp> {
                 },
               ),
             ),
-            new BaseButton(_size, _sizeWidth, _copyClickOnClick),
+            new Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                new BaseButton(_size, _sizeWidth, _copyClickOnClick),
+                new BaseButton(_size, _sizeWidth, _clickOnClickManager),
+              ],
+            ),
           ],
         ),
       ),

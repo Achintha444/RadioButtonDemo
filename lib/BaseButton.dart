@@ -12,7 +12,7 @@ class BaseButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: double.infinity,
+      width: 21*(_sizeWidth/50),
       height: _size / 10,
       padding: EdgeInsets.all(_sizeWidth / 25),
       decoration: new BoxDecoration(
