@@ -11,6 +11,8 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   int _selectedTeamIndex;
+  bool _switchBool = false;
+  Function _copyClickOnClick = null;
 
   List<String> _teams = [
     "Manchester United",
@@ -18,6 +20,17 @@ class _MyAppState extends State<MyApp> {
     "Real Madrid",
     "Chelsea"
   ];
+
+  void _switchOnClick(bool value) {
+    setState(() {
+      _switchBool = value;
+      if (value) {
+        _copyClickOnClick = _clickOnClick;
+      } else {
+        _copyClickOnClick = null;
+      }
+    });
+  }
 
   void _clickOnClick(BuildContext tempContext) {
     setState(() {
@@ -43,57 +56,79 @@ class _MyAppState extends State<MyApp> {
       appBar: new AppBar(
         title: new Text("Radio Buttons Demo"),
       ),
-      body: new Column(
-        children: <Widget>[
-          new Container(
-            alignment: Alignment.topCenter,
-            padding: EdgeInsets.only(top: _size / 60, bottom: _size / 60),
-            child: new Text(
-              "Select Your Favourite Team!",
-              style: new TextStyle(
-                fontSize: _size / 30,
-                letterSpacing: 2,
-                color: Colors.blueAccent,
-                fontWeight: FontWeight.bold,
+      body: new Center(
+        child: new Column(
+          children: <Widget>[
+            new Container(
+              alignment: Alignment.topCenter,
+              padding: EdgeInsets.only(top: _size / 60, bottom: _size / 60),
+              child: new Text(
+                "Select Your Favourite Team!",
+                style: new TextStyle(
+                  fontSize: _size / 30,
+                  letterSpacing: 2,
+                  color: Colors.blueAccent,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
-          ),
-          new Container(
-            alignment: Alignment.topCenter,
-            child: new SizedBox(
-              height: _size / 2.5,
-              child: ListView.builder(
-                shrinkWrap: true,
-                itemCount: _teams.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return new Container(
-                    alignment: Alignment.topCenter,
-                    padding: EdgeInsets.only(bottom: 10),
-                    decoration: new BoxDecoration(
-                      border: new Border(
-                        bottom: new BorderSide(
-                          color: Colors.lightBlueAccent,
-                          width: 2,
+            new Container(
+              padding: EdgeInsets.only(bottom: _size / 60),
+              alignment: Alignment.topCenter,
+              child: new SizedBox(
+                height: _size / 2.4,
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: _teams.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return new Container(
+                      alignment: Alignment.topCenter,
+                      padding: EdgeInsets.only(bottom: _size / 60),
+                      decoration: new BoxDecoration(
+                        border: new Border(
+                          bottom: new BorderSide(
+                            color: Colors.lightBlueAccent,
+                            width: 2,
+                          ),
                         ),
                       ),
-                    ),
-                    child: new RadioListTile(
-                      value: index,
-                      title: new Text(_teams[index]),
-                      groupValue: _selectedTeamIndex,
-                      onChanged: (int value) {
-                        setState(() {
-                          _selectedTeamIndex = value;
-                        });
-                      },
-                    ),
-                  );
+                      child: new RadioListTile(
+                        value: index,
+                        title: new Text(_teams[index]),
+                        groupValue: _selectedTeamIndex,
+                        onChanged: (int value) {
+                          setState(() {
+                            _selectedTeamIndex = value;
+                          });
+                        },
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ),
+            new Container(
+              padding: EdgeInsets.all(_size / 90),
+              margin: EdgeInsets.only(
+                  right: _sizeWidth / 30, left: _sizeWidth / 30),
+              decoration: new BoxDecoration(
+                  borderRadius: BorderRadius.circular(30),
+                  border: Border.all(
+                    width: 2,
+                    color: Colors.lightBlueAccent,
+                  )),
+              child: new SwitchListTile(
+                title: new Text("Click to activate the button"),
+                secondary: new Icon(Icons.cake),
+                value: _switchBool,
+                onChanged: (bool value) {
+                  _switchOnClick(value);
                 },
               ),
             ),
-          ),
-          new BaseButton(_size, _sizeWidth, _clickOnClick),
-        ],
+            new BaseButton(_size, _sizeWidth, _copyClickOnClick),
+          ],
+        ),
       ),
     );
   }

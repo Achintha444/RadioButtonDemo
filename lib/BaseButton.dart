@@ -4,7 +4,8 @@ class BaseButton extends StatelessWidget {
 
   double _size;
   double _sizeWidth;
-  Function _clickOnClick;
+  Function _clickOnClick = null;
+  bool _switchValue;
 
   BaseButton(this._size,this._sizeWidth,this._clickOnClick);
 
@@ -13,7 +14,7 @@ class BaseButton extends StatelessWidget {
     return Container(
       width: double.infinity,
       height: _size / 10,
-      padding: EdgeInsets.all(_sizeWidth / 30),
+      padding: EdgeInsets.all(_sizeWidth / 25),
       decoration: new BoxDecoration(
         borderRadius: new BorderRadius.circular(25),
       ),
