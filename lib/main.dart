@@ -11,6 +11,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   int _selectedTeamIndex;
+  double _selectedTeamAwesomenes = 0;
   bool _switchBool = false;
   Function _copyClickOnClick = null;
 
@@ -36,7 +37,7 @@ class _MyAppState extends State<MyApp> {
     setState(() {
       SnackBar snackBar = new SnackBar(
         backgroundColor: Colors.lightBlueAccent,
-        content: new Text("You Selected " + _teams[_selectedTeamIndex]),
+        content: new Text("You Selected " + _teams[_selectedTeamIndex]+" awesomenes is "+(_selectedTeamAwesomenes*100).round().toString()),
         action: SnackBarAction(
           label: "OK",
           onPressed: () {
@@ -94,6 +95,10 @@ class _MyAppState extends State<MyApp> {
                       ),
                       child: new RadioListTile(
                         value: index,
+                        secondary: new Icon(
+                          Icons.group,
+                          color: Colors.lightBlueAccent,
+                        ),
                         title: new Text(_teams[index]),
                         groupValue: _selectedTeamIndex,
                         onChanged: (int value) {
@@ -105,6 +110,37 @@ class _MyAppState extends State<MyApp> {
                     );
                   },
                 ),
+              ),
+            ),
+            new Container(
+              alignment: Alignment.topCenter,
+              padding: EdgeInsets.only(top: _size / 60, bottom: _size / 60),
+              child: new Text(
+                "Set Awesomenes of the selected Team!",
+                style: new TextStyle(
+                  fontSize: _size / 40,
+                  letterSpacing: 2,
+                  color: Colors.blueAccent,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            new Container(
+              child: new Slider(
+                min: 0,
+                max: 1,
+                value: _selectedTeamAwesomenes,
+                onChanged: (double value) {
+                  setState(() {
+                    _selectedTeamAwesomenes = value;
+                  });
+                },
+              ),
+            ),
+            new Container(
+              padding: EdgeInsets.only(bottom: _size/60),
+              child: new LinearProgressIndicator(
+                value: _selectedTeamAwesomenes,
               ),
             ),
             new Container(
