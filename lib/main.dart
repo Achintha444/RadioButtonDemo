@@ -10,7 +10,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  int _selectedTeamIndex;
+  int _selectedTeamIndex = 0;
   double _selectedTeamAwesomenes = 0;
   bool _switchBool = false;
   Function _copyClickOnClick = null;
@@ -33,6 +33,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     _selectedManagers = _managers[0];
+    _selectedTeamIndex = 0;
     super.initState();
   }
 
@@ -70,7 +71,7 @@ class _MyAppState extends State<MyApp> {
     setState(() {
       SnackBar snackBar = new SnackBar(
         backgroundColor: Colors.lightBlueAccent,
-        content: new Text("You selected "+_selectedManagers),
+        content: new Text("You selected " + _selectedManagers),
         action: SnackBarAction(
           label: "OK",
           onPressed: () {
@@ -89,6 +90,170 @@ class _MyAppState extends State<MyApp> {
     return Scaffold(
       appBar: new AppBar(
         title: new Text("Radio Buttons Demo"),
+      ),
+      drawer: new Drawer(
+        child: new Container(
+          child: new Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              new Container(
+                height: _size / 8.65,
+                width: double.infinity,
+                color: Colors.blue,
+                padding:
+                    EdgeInsets.only(top: _size / 28, left: _sizeWidth / 60),
+                child: new Text(
+                  "Radio Button Demo",
+                  style: new TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              new Column(
+                children: <Widget>[
+                  new Container(
+                    padding: EdgeInsets.only(top: _size / 50),
+                    child: new Text(
+                      "SELECTED MANAGER",
+                      style: new TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.blue,
+                      ),
+                    ),
+                  ),
+                  new Container(
+                    alignment: Alignment.topCenter,
+                    decoration: new BoxDecoration(
+                      border: new Border(
+                        bottom: new BorderSide(
+                            width: 2, color: Colors.lightBlueAccent),
+                      ),
+                    ),
+                    padding: EdgeInsets.only(
+                      top: _size / 30,
+                      left: _sizeWidth / 9,
+                      bottom: _size / 60,
+                    ),
+                    child: new Row(
+                      children: <Widget>[
+                        new Icon(
+                          Icons.group,
+                          color: Colors.lightBlueAccent,
+                          size: 40,
+                        ),
+                        new Container(
+                          padding: EdgeInsets.only(left: _sizeWidth / 50),
+                          child: new Text(
+                            _teams[_selectedTeamIndex],
+                            style: new TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.blue,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  new Container(
+                    padding: EdgeInsets.only(top: _size / 50),
+                    child: new Text(
+                      "SELECTED AWESOMENES",
+                      style: new TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.blue,
+                      ),
+                    ),
+                  ),
+                  new Container(
+                    alignment: Alignment.topCenter,
+                    decoration: new BoxDecoration(
+                      border: new Border(
+                        bottom: new BorderSide(
+                            width: 2, color: Colors.lightBlueAccent),
+                      ),
+                    ),
+                    padding: EdgeInsets.only(
+                      top: _size / 30,
+                      left: _sizeWidth / 9,
+                      bottom: _size / 60,
+                    ),
+                    child: new Row(
+                      children: <Widget>[
+                        new Icon(
+                          Icons.spa,
+                          color: Colors.lightBlueAccent,
+                          size: 40,
+                        ),
+                        new Container(
+                          padding: EdgeInsets.only(left: _sizeWidth / 50),
+                          child: new Text(
+                            _selectedTeamAwesomenes.toString(),
+                            style: new TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.blue,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                                    new Container(
+                    padding: EdgeInsets.only(top: _size / 50),
+                    child: new Text(
+                      "SELECTED MANAGER",
+                      style: new TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.blue,
+                      ),
+                    ),
+                  ),
+                  new Container(
+                    alignment: Alignment.topCenter,
+                    decoration: new BoxDecoration(
+                      border: new Border(
+                        bottom: new BorderSide(
+                            width: 2, color: Colors.lightBlueAccent),
+                      ),
+                    ),
+                    padding: EdgeInsets.only(
+                      top: _size / 30,
+                      left: _sizeWidth / 9,
+                      bottom: _size / 60,
+                    ),
+                    child: new Row(
+                      children: <Widget>[
+                        new Icon(
+                          Icons.person_outline,
+                          color: Colors.lightBlueAccent,
+                          size: 40,
+                        ),
+                        new Container(
+                          padding: EdgeInsets.only(left: _sizeWidth / 50),
+                          child: new Text(
+                            _selectedManagers,
+                            style: new TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.blue,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  
+                ],
+              ),
+            ],
+          ),
+        ),
       ),
       body: new Center(
         child: new Column(
