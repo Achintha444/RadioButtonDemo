@@ -192,7 +192,7 @@ class _MyAppState extends State<MyApp> {
                         new Container(
                           padding: EdgeInsets.only(left: _sizeWidth / 50),
                           child: new Text(
-                            _selectedTeamAwesomenes.toString(),
+                            (_selectedTeamAwesomenes*100).round().toString() + " %",
                             style: new TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
