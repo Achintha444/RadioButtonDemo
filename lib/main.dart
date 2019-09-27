@@ -192,7 +192,8 @@ class _MyAppState extends State<MyApp> {
                         new Container(
                           padding: EdgeInsets.only(left: _sizeWidth / 50),
                           child: new Text(
-                            (_selectedTeamAwesomenes*100).round().toString() + " %",
+                            (_selectedTeamAwesomenes * 100).round().toString() +
+                                " %",
                             style: new TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
@@ -203,7 +204,7 @@ class _MyAppState extends State<MyApp> {
                       ],
                     ),
                   ),
-                                    new Container(
+                  new Container(
                     padding: EdgeInsets.only(top: _size / 50),
                     child: new Text(
                       "SELECTED MANAGER",
@@ -248,12 +249,25 @@ class _MyAppState extends State<MyApp> {
                       ],
                     ),
                   ),
-                  
                 ],
               ),
             ],
           ),
         ),
+      ),
+      floatingActionButton: new FloatingActionButton(
+        tooltip: "Rest",
+        child: new Icon(Icons.clear_all),
+        backgroundColor: Colors.blue,
+        onPressed: () {
+          setState(() {
+            _selectedTeamIndex = 0;
+            _selectedTeamAwesomenes = 0;
+            _switchBool = false;
+            _copyClickOnClick = null;
+            _selectedManagers = _managers[0];
+          });
+        },
       ),
       body: new Center(
         child: new Column(
